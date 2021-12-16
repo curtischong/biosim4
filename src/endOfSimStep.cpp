@@ -54,6 +54,32 @@ void endOfSimStep(unsigned simStep, unsigned generation)
         }
     }
 
+    if (p.challenge == CHALLENGE_EAST_WEST_EIGHTHS_BLINKING_GATES){
+        int16_t eighthOfGrid = grid.sizeX() / 8;
+        if(simStep%8 == 0){
+            // kill all creatures in the lower left gate
+
+            for (uint16_t index = 1; index <= p.population; ++index) { // index 0 is reserved
+                Indiv &indiv = peeps[index];
+                if(eighthOfGrid +1 <= indiv.loc.x && indiv.loc.x <= eighthOfGrid + 3 &&
+                        eighthOfGrid*6+1 <= indiv.loc.y){
+                    peeps.queueForDeath(indiv);
+                }
+            }
+        }
+        if(simStep%12 == 0){
+            // kill all creatures in the upper right gate
+
+            for (uint16_t index = 1; index <= p.population; ++index) { // index 0 is reserved
+                Indiv &indiv = peeps[index];
+                if((grid.sizeX() - eighthOfGrid)-3 <= indiv.loc.x && indiv.loc.x <= (grid.sizeX() - eighthOfGrid)-1 &&
+                    indiv.loc.y < eighthOfGrid*2){
+                    peeps.queueForDeath(indiv);
+                }
+            }
+        }
+    }
+
     // If this challenge is enabled, the individual gets a bit set in their challengeBits
     // member if they are within a specified radius of a barrier center. They have to
     // visit the barriers in sequential order.

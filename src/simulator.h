@@ -31,6 +31,7 @@ constexpr unsigned CHALLENGE_RADIOACTIVE_WALLS = 10;
 constexpr unsigned CHALLENGE_AGAINST_ANY_WALL = 11;
 constexpr unsigned CHALLENGE_TOUCH_ANY_WALL = 12;
 constexpr unsigned CHALLENGE_EAST_WEST_EIGHTHS = 13;
+constexpr unsigned CHALLENGE_EAST_WEST_EIGHTHS_BLINKING_GATES = 130;
 constexpr unsigned CHALLENGE_NEAR_BARRIER = 14;
 constexpr unsigned CHALLENGE_PAIRS = 15;
 constexpr unsigned CHALLENGE_LOCATION_SEQUENCE = 16;

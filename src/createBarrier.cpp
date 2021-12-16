@@ -15,7 +15,17 @@ namespace BS {
 // This file typically is under constant development and change for
 // specific scenarios.
 
-void Grid::createBarrier(unsigned barrierType)
+// Creates a barrier that spans the rectangle formed by these 2 points (inclusive)
+void Grid::createBarrierFromCoords(int x1, int y1, int x2, int y2){
+    for (int16_t x = x1; x <= x2; ++x) {
+        for (int16_t y = y1; y <= y2; ++y) {
+            grid.set(x, y, BARRIER);
+            barrierLocations.push_back( {x, y} );
+        }
+    }
+}
+
+    void Grid::createBarrier(unsigned barrierType)
 {
     barrierLocations.clear();
     barrierCenters.clear();  // used only for some barrier types
@@ -175,7 +185,24 @@ void Grid::createBarrier(unsigned barrierType)
             }
         }
         break;
+    case 7: // for CHALLENGE_EAST_WEST_EIGHTHS_BLINKING_GATES
+        {
+            // There are 2 barriers:
+            // |-|-----------|
+            // | |           |
+            // | |         | |
+            // | |         | |
+            // |           | |
+            // |-----------|-|
+            // ^ the image is the general idea of where the barriers are. (not to scale)
 
+            int16_t eighthOfGrid = grid.sizeX() / 8;
+            // left barrier
+            createBarrierFromCoords(eighthOfGrid+1, 0, eighthOfGrid+3, eighthOfGrid*6);
+            // right barrier
+            createBarrierFromCoords((grid.sizeX() - eighthOfGrid)-3, eighthOfGrid*2, grid.sizeX() - eighthOfGrid-1, sizeY());
+            break;
+        }
     default:
         assert(false);
     }

@@ -221,6 +221,7 @@ std::pair<bool, float> passedSurvivalCriterion(const Indiv &indiv, unsigned chal
 
     // Survivors are all those on the left or right eighths of the arena
     case CHALLENGE_EAST_WEST_EIGHTHS:
+    case CHALLENGE_EAST_WEST_EIGHTHS_BLINKING_GATES:
         return indiv.loc.x < p.sizeX / 8 || indiv.loc.x >= (p.sizeX - p.sizeX / 8)?
               std::pair<bool, float> { true, 1.0 }
             : std::pair<bool, float> { false, 0.0 };

@@ -52,6 +52,7 @@ public:
     void set(uint16_t x, uint16_t y, uint16_t val) { data[x][y] = val; }
     Coord findEmptyLocation() const;
     void createBarrier(unsigned barrierType);
+    void createBarrierFromCoords(int x1, int y1, int x2, int y2);
     const std::vector<Coord> &getBarrierLocations() const { return barrierLocations; }
     const std::vector<Coord> &getBarrierCenters() const { return barrierCenters; }
     // Direct access:
