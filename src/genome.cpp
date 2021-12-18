@@ -97,6 +97,10 @@ Gene makeGeneFromString(std::string geneString){
 Genome makeGenomeFromString(std::string genomeString)
 {
     Genome genome;
+    if(genomeString.length() == 0 || genomeString.length()%8 != 0){
+        std::cout<<"invalid starting genome string"<<std::endl;
+        return genome;
+    }
     // note that there are no spaces in the genomeString (since spaces are parsed out)
     for(int i = 0; i < genomeString.length(); i += 8){
         std::string token = genomeString.substr(i, 8);
