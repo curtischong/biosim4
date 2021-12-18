@@ -86,23 +86,20 @@ Gene makeGeneFromString(std::string geneString){
     std::bitset<32> geneBits(n);
     int b = (int)(geneBits.to_ulong());
     // outputs "00000000000000000000000000001010"
-    gene.weight = b &     0xffff0000;
-    gene.sinkNum = b &    0x0000fe00;
-    gene.sinkType = b &   0x00000800;
-    gene.sourceNum = b &  0x000000fe;
-    gene.sourceType = b & 0x00000008;
+    gene.weight = int(b & 0xffff0000)>>16;
+    gene.sinkNum = int(b & 0x0000fe00)>>9;
+    gene.sinkType = int(b & 0x00000100)>>8;
+    gene.sourceNum = int(b & 0x000000fe)>>1;
+    gene.sourceType = int(b & 0x00000001);
     return gene;
 }
 
 Genome makeGenomeFromString(std::string genomeString)
 {
-    std::cout<<"genomeString: "<<genomeString<<std::endl;
-
     Genome genome;
-    auto iss = std::istringstream{genomeString};
-    auto token = std::string{};
-
-    while (iss >> token) {
+    // note that there are no spaces in the genomeString (since spaces are parsed out)
+    for(int i = 0; i < genomeString.length(); i += 8){
+        std::string token = genomeString.substr(i, 8);
         genome.push_back(makeGeneFromString(token));
     }
 
