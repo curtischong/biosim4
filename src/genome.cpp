@@ -6,8 +6,13 @@
 #include <iostream>
 #include <cassert>
 #include <string>
+#include <bitset>
 #include "simulator.h"
 #include "random.h"
+#include <sstream>
+#include <iterator>
+#include <iomanip>
+#include <cstring>
 
 namespace BS {
 
@@ -35,6 +40,26 @@ typedef std::map<uint16_t, Node> NodeMap; // key is neuron number 0..p.maxNumber
 
 typedef std::list<Gene> ConnectionList;
 
+void printGenome(Genome genome)
+{
+    constexpr unsigned genesPerLine = 8;
+    unsigned count = 0;
+    for (Gene gene : genome) {
+        if (count == genesPerLine) {
+            std::cout << std::endl;
+            count = 0;
+        } else if (count != 0) {
+            std::cout << " ";
+        }
+
+        assert(sizeof(Gene) == 4);
+        uint32_t n;
+        std::memcpy(&n, &gene, sizeof(n));
+        std::cout << std::hex << std::setfill('0') << std::setw(8) << n;
+        ++count;
+    }
+    std::cout << std::dec << std::endl;
+}
 
 // Returns by value a single gene with random members.
 // See genome.h for the width of the members.
@@ -52,9 +77,36 @@ Gene makeRandomGene()
     return gene;
 }
 
-Genome makeGenomeFromString(std::string genome)
+Gene makeGeneFromString(std::string geneString){
+    Gene gene;
+    std::stringstream ss;
+    ss << std::hex << geneString;
+    unsigned n;
+    ss >> n;
+    std::bitset<32> geneBits(n);
+    int b = (int)(geneBits.to_ulong());
+    // outputs "00000000000000000000000000001010"
+    gene.weight = b &     0xffff0000;
+    gene.sinkNum = b &    0x0000fe00;
+    gene.sinkType = b &   0x00000800;
+    gene.sourceNum = b &  0x000000fe;
+    gene.sourceType = b & 0x00000008;
+    return gene;
+}
+
+Genome makeGenomeFromString(std::string genomeString)
 {
-    return makeRandomGenome();
+    std::cout<<"genomeString: "<<genomeString<<std::endl;
+
+    Genome genome;
+    auto iss = std::istringstream{genomeString};
+    auto token = std::string{};
+
+    while (iss >> token) {
+        genome.push_back(makeGeneFromString(token));
+    }
+
+    return genome;
 }
 
 // Returns by value a single genome with random genes.

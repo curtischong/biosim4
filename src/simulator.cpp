@@ -16,11 +16,14 @@
 #include <algorithm>
 #include "simulator.h"     // the simulator data structures
 #include "imageWriter.h"   // this is for generating the movies
+#include <iomanip>
+#include <cstring>
+#include <string>
 
 namespace BS {
 
 extern void initializeGeneration0();
-extern void initializeGeneration0WithGenome(std::string genome);
+extern void initializeGeneration0WithGenome(Genome genome);
 extern unsigned spawnNewGeneration(unsigned generation, unsigned murderCount);
 extern void displaySampleGenomes(unsigned count);
 extern void executeActions(Indiv &indiv, std::array<float, Action::NUM_ACTIONS> &actionLevels);
@@ -129,9 +132,24 @@ void simulator(int argc, char **argv)
     // Unit tests:
     //unitTestConnectNeuralNetWiringFromGenome();
     //unitTestGridVisitNeighborhood();
+    //Gene test = makeRandomGene();
+    //std::cout<<"new gene"<<std::endl;
+    //uint32_t n;
+    //std::memcpy(&n, &test, sizeof(n));
+    //std::cout << std::hex << std::setfill('0') << std::setw(8) << n;
+    //std::cout<<"now the values"<<std::endl;
+    //std::cout<<test.sourceType<<std::endl;
+    //std::cout<<test.sourceNum<<std::endl;
+    //std::cout<<test.sinkType<<std::endl;
+    //std::cout<<test.sinkNum<<std::endl;
+    //std::cout<<test.weight<<std::endl;
+    Genome startingGenome = makeGenomeFromString(p.startingGenome);
+    std::cout<<"starting genome: "<<std::endl;
+    printGenome(startingGenome);
+
 
     unsigned generation = 0;
-    initializeGeneration0WithGenome(p.startingGenome); // starting population
+    initializeGeneration0WithGenome(startingGenome); // starting population
     runMode = RunMode::RUN;
     unsigned murderCount;
 

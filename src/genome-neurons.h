@@ -82,6 +82,7 @@ struct NeuralNet {
 //constexpr float initialNeuronOutput() { return (NEURON_RANGE / 2.0) + NEURON_MIN; }
 constexpr float initialNeuronOutput() { return 0.5; }
 
+extern void printGenome(Genome genome);
 extern Gene makeRandomGene();
 extern Genome makeRandomGenome();
 extern Genome makeGenomeFromString(std::string genome);

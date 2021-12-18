@@ -15,7 +15,7 @@ extern std::pair<bool, float> passedSurvivalCriterion(const Indiv &indiv, unsign
 // Requires that the grid, signals, and peeps containers have been allocated.
 // This will erase the grid and signal layers, then create a new population in
 // the peeps container at random locations with random genomes.
-void initializeGeneration0WithGenome(std::string genome)
+void initializeGeneration0WithGenome(Genome genome)
 {
     // The grid has already been allocated, just clear and reuse it
     grid.zeroFill();
@@ -28,17 +28,17 @@ void initializeGeneration0WithGenome(std::string genome)
     // Spawn the population. The peeps container has already been allocated,
     // just clear and reuse it
     for (uint16_t index = 1; index <= p.population; ++index) {
-        if (genome == ""){
+        if (genome.size() == 0){
             peeps[index].initialize(index, grid.findEmptyLocation(), makeRandomGenome());
         }else{
-            peeps[index].initialize(index, grid.findEmptyLocation(), makeGenomeFromString(genome));
+            peeps[index].initialize(index, grid.findEmptyLocation(), Genome{genome});
         }
     }
 }
 
     void initializeGeneration0()
     {
-        initializeGeneration0WithGenome("");
+        initializeGeneration0WithGenome(Genome{});
     }
 
 
