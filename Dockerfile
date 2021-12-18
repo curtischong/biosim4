@@ -19,6 +19,8 @@ RUN apt-get update && apt-get install -yqq \
 
 WORKDIR /app
 RUN useradd -ms /bin/bash darwin
+RUN apt-get update && apt-get install tmux -yqq
+RUN pip install flask
 USER darwin
 
 # Runs "/usr/bin/dumb-init -- /my/script --with --args"

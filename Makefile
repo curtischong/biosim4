@@ -225,5 +225,12 @@ clean_release:
 	rm -rf bin/Release
 	rm -rf $(OBJDIR_RELEASE)/src
 
-.PHONY: before_debug after_debug clean_debug before_release after_release clean_release
+run_docker:
+	docker run --rm -ti -v `pwd`:/app -p 127.0.0.1:80:5000 --name biosim biosim4 bash
+
+# run while in docker container
+run_server:
+	flask run --host=0.0.0.0
+
+.PHONY: before_debug after_debug clean_debug before_release after_release clean_release run_docker run_server
 
