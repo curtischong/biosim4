@@ -4,3 +4,4 @@ obj/
 .vscode
 bin/
 __pycache__/
+.secret.txt

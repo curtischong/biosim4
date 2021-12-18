@@ -49,6 +49,9 @@ def submit():
     percentage_survived = num_survivors/3000.0
     result_prefix = datetime.now().strftime("%I:%M:%S %p") + ": "
     if (percentage_survived >= 0.667):
-        return result_prefix + str(percentage_survived) + " survived. Congrats! the secret key is"
+        f = open(".secret.txt", "r")
+        secret = f.read()
+        f.close()
+        return result_prefix + str(percentage_survived*100) + "% survived. Congrats! the secret key is: " + secret
     else:
-        return result_prefix + str(percentage_survived) + " survived"
+        return result_prefix + str(percentage_survived*100) + "% survived"
