@@ -65,6 +65,7 @@ void ParamManager::setDefaults()
     privParams.updateGraphLogStride = privParams.videoStride;
     privParams.deterministic = false;
     privParams.RNGSeed = 12345678;
+    privParams.startingGenome = "";
     privParams.graphLogUpdateCommand = "/usr/bin/gnuplot --persist ./tools/graphlog.gp";
 }
 
@@ -266,6 +267,9 @@ void ParamManager::ingestParameter(std::string name, std::string val)
         }
         else if (name == "rngseed" && isUint) {
             privParams.RNGSeed = uVal; break;
+        }
+        else if (name == "startinggenome") {
+            privParams.startingGenome = val; break;
         }
         else {
             std::cout << "Invalid param: " << name << " = " << val << std::endl;

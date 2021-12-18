@@ -52,6 +52,10 @@ Gene makeRandomGene()
     return gene;
 }
 
+Genome makeGenomeFromString(std::string genome)
+{
+    return makeRandomGenome();
+}
 
 // Returns by value a single genome with random genes.
 Genome makeRandomGenome()

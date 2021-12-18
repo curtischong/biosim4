@@ -84,6 +84,7 @@ constexpr float initialNeuronOutput() { return 0.5; }
 
 extern Gene makeRandomGene();
 extern Genome makeRandomGenome();
+extern Genome makeGenomeFromString(std::string genome);
 extern void unitTestConnectNeuralNetWiringFromGenome();
 extern float genomeSimilarity(const Genome &g1, const Genome &g2); // 0.0..1.0
 extern float geneticDiversity();  // 0.0..1.0

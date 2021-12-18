@@ -20,6 +20,7 @@
 namespace BS {
 
 extern void initializeGeneration0();
+extern void initializeGeneration0WithGenome(std::string genome);
 extern unsigned spawnNewGeneration(unsigned generation, unsigned murderCount);
 extern void displaySampleGenomes(unsigned count);
 extern void executeActions(Indiv &indiv, std::array<float, Action::NUM_ACTIONS> &actionLevels);
@@ -130,7 +131,7 @@ void simulator(int argc, char **argv)
     //unitTestGridVisitNeighborhood();
 
     unsigned generation = 0;
-    initializeGeneration0(); // starting population
+    initializeGeneration0WithGenome(p.startingGenome); // starting population
     runMode = RunMode::RUN;
     unsigned murderCount;
 
