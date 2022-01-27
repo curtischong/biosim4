@@ -32,11 +32,13 @@ void endOfSimStep(unsigned simStep, unsigned generation)
 
         for (uint16_t index = 1; index <= p.population; ++index) { // index 0 is reserved
             Indiv &indiv = peeps[index];
-            int16_t distanceFromRadioactiveWall = std::abs(indiv.loc.x - radioactiveX);
-            if (distanceFromRadioactiveWall < p.sizeX / 2) {
-                float chanceOfDeath = 1.0 / distanceFromRadioactiveWall;
-                if (randomUint() / (float)RANDOM_UINT_MAX < chanceOfDeath) {
-                    peeps.queueForDeath(indiv);
+            if (indiv.alive) {
+                int16_t distanceFromRadioactiveWall = std::abs(indiv.loc.x - radioactiveX);
+                if (distanceFromRadioactiveWall < p.sizeX / 2) {
+                    float chanceOfDeath = 1.0 / distanceFromRadioactiveWall;
+                    if (randomUint() / (float)RANDOM_UINT_MAX < chanceOfDeath) {
+                        peeps.queueForDeath(indiv);
+                    }
                 }
             }
         }
@@ -61,7 +63,7 @@ void endOfSimStep(unsigned simStep, unsigned generation)
 
             for (uint16_t index = 1; index <= p.population; ++index) { // index 0 is reserved
                 Indiv &indiv = peeps[index];
-                if(eighthOfGrid +1 <= indiv.loc.x && indiv.loc.x <= eighthOfGrid + 3 &&
+                if(indiv.alive && eighthOfGrid +1 <= indiv.loc.x && indiv.loc.x <= eighthOfGrid + 3 &&
                         eighthOfGrid*6+1 <= indiv.loc.y){
                     peeps.queueForDeath(indiv);
                 }
@@ -72,8 +74,8 @@ void endOfSimStep(unsigned simStep, unsigned generation)
 
             for (uint16_t index = 1; index <= p.population; ++index) { // index 0 is reserved
                 Indiv &indiv = peeps[index];
-                if((grid.sizeX() - eighthOfGrid)-3 <= indiv.loc.x && indiv.loc.x <= (grid.sizeX() - eighthOfGrid)-1 &&
-                    indiv.loc.y < eighthOfGrid*2){
+                if(indiv.alive && (grid.sizeX() - eighthOfGrid)-3 <= indiv.loc.x &&
+                    indiv.loc.x <= (grid.sizeX() - eighthOfGrid)-1 && indiv.loc.y < eighthOfGrid*2){
                     peeps.queueForDeath(indiv);
                 }
             }
